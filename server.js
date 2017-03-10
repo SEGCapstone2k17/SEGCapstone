@@ -1,27 +1,36 @@
+import webpack from 'webpack';
+import webpackMiddleware from 'webpack-dev-middleware';
+import config from './webpack.config.js';
 var express = require('express');
-var path = require ('path');
-var api = require('./api/index.js');
+var bodyParser = require('body-parser');
+var react = require('react');
+var reactdom = require('react-dom');
 
-app.get('/login', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/login.html'));
-});
+const routes = require('./routes');
+const app = new express();
+const compiler = webpack(config);
 
-app.get('/dashboard', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/dashboard.html'));
-});
+// declare static directory
+app.use(express.static(__dirname + '/views'));
 
-app.get('/login-reset', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/login-reset.html'));
-});
+// Use middleware compiler
+app.use(webpackMiddleware(compiler));
 
-// API routes
-app.use('/api', api);
+// for parsing application/json
+app.use(bodyParser.json());
+
+// for parsing applicaiton/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true}));
+
+// Import routes
+app.use('/', routes);
 
 // start the server
-const port = 3000;
+const port = process.env.PORT || 3000;
+const env = process.env.NODE_ENV || 'production';
 app.listen(port, err => {
   if (err) {
     return console.error(err);
   }
-  console.info(`Server running on http://localhost:${port}`);
+  console.info(`Server running on http://localhost:${port} [${env}]`);
 });

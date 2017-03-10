@@ -1,0 +1,17 @@
+header {
+    background-color: rgba(3, 169, 244, 0.5);
+    font-size: 30px;
+}
+
+header a {
+    margin: 5px;
+}
+
+footer {
+    background-color: rgba(3, 169, 244, 0.5);
+}
+
+.project-result {
+    color: inherit;
+    text-decoration: none;
+}

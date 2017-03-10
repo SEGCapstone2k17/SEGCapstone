@@ -1,64 +1,129 @@
-var promise = require('bluebird');
-
-var options = {
-  // Initialization Options
-  promiseLib: promise
-};
-
-var pgp = require('pg-promise')(options);
+var pgp = require('pg-promise')();
 var connectionString = "postgres://postgres:1q2w3e4r@localhost:5432/MockProject";
 var db = pgp(connectionString);
 
-// fetch all projects from the Project table
-function getAllProjects(req, res, next) {
-    db.any('SELECT * FROM "Project"')
-      .then(function (data) {
-        res.status(200)
-          .json({
-            status: 'success',
-            projects: data,
-            message: 'Retrieved ALL projects'
-          });
+// attempts to add a customer to the database
+function addCustomer(req, res, next) {
+    var query = '';
+    if(req.body) {
+        let values = `(\'${req.body.fname}\', \'${req.body.lname}\',\'${req.body.gender}\',\'${req.body.title}\')`;
+        query = `INSERT INTO "Customer" ("First_Name", "Last_Name", "Gender", "Title") VALUES ${values} RETURNING "Customer_ID"`;
+    }
+    db.any(query)
+        .then(data => {
+            console.log("Data is: " + data[0].Customer_ID);
+            res.redirect('/customers/' + data[0].Customer_ID);
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// searches for all customers
+function searchCustomers(req, res, next) {
+    var query = 'SELECT * FROM "Customer"';
+    if(req.query.s) {
+        query = 'SELECT * FROM "Customer" WHERE LOWER("First_Name") LIKE LOWER(\'%' + req.query.s + '%\')';
+    }
+    db.any(query)
+        .then(data => {
+            res.send({customers: data});
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// retrieves a specific customer
+function getCustomerById(req, res, next) {
+    var query = '';
+    if(req.params.id) {
+        query = 'SELECT * FROM "Customer" WHERE "Customer_ID" =' + req.params.id;
+    }
+    db.any(query)
+        .then(data => {
+            res.send({customers: data});
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// attempts to add a project to the database
+function addProject(req, res, next) {
+    var query = '';
+    if(req.body) {
+        let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\')`;
+        query = `INSERT INTO "Project" ("Name", "Description", "Cost", "Currency") VALUES ${values} RETURNING "Project_ID"`;
+    }
+    db.any(query)
+        .then(data => {
+            console.log("Data is: " + data[0].Project_ID);
+            res.redirect('/projects/' + data[0].Project_ID);
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// retrieves a specific project
+function getProjectById(req, res, next) {
+    var query = '';
+    if(req.params.id) {
+        query = 'SELECT * FROM "Project" WHERE "Project_ID" =' + req.params.id;
+    }
+    db.any(query)
+        .then(data => {
+            res.send({projects: data});
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// searches for projects without returning any customer information
+function searchProjects(req, res, next){
+    var query = 'SELECT * FROM "Project"';
+    if(req.query.s) {
+        query = 'SELECT * FROM "Project" WHERE LOWER("Name") LIKE LOWER(\'%' + req.query.s + '%\')';
+    }
+    db.any(query)
+      .then(data => {
+        res.send({projects: data});
       })
-      .catch(function (err) {
+      .catch(err => {
         return next(err);
       });
 }
 
-// fetch all projects by name from the Project table
-function getProjectsByName(req, res, next) {
-    db.any('SELECT * FROM "Project" WHERE LOWER("Name") LIKE LOWER(\'%' + req.query.projectname + '%\')')
-      .then(function (data) {
-        res.status(200)
-          .json({
-            status: 'success',
-            projects: data,
-            message: 'Retrieved all projects with name'
-          });
+// searches for projects while also returning basic customer information
+function searchProjectsWithCustomers(req, res, next){
+    var query = 'SELECT "Project".*, "Customer"."First_Name", "Customer"."Last_Name"'+
+            'FROM "Project"' +
+            'LEFT JOIN "Customer"' +
+            'ON "Project"."Customer_ID" = "Customer"."Customer_ID"';
+    if(req.query.s) {
+        query = 'SELECT "Project".*, "Customer"."First_Name", "Customer"."Last_Name"'+
+                'FROM "Project"' +
+                'LEFT JOIN "Customer"' +
+                'ON "Project"."Customer_ID" = "Customer"."Customer_ID"'+
+                'WHERE LOWER("Project"."Name") LIKE LOWER(\'%' + req.query.s + '%\')';
+    }
+    db.any(query)
+      .then(data => {
+        res.send({projects: data});
       })
-      .catch(function (err) {
-        return next(err);
-      });
-}
-
-// fetch project from the Project table with given identifier
-function getSingleProject(req, res, next) {
-    db.any('SELECT * FROM "Project" WHERE "Project_ID" = ' + req.params.id)
-      .then(function (data) {
-        res.status(200)
-          .json({
-            status: 'success',
-            projects: data,
-            message: 'Retrieved all projects with name'
-          });
-      })
-      .catch(function (err) {
+      .catch(err => {
         return next(err);
       });
 }
 
 module.exports = {
-  getAllProjects: getAllProjects,
-  getProjectsByName: getProjectsByName,
-  getSingleProject: getSingleProject
+    searchCustomers: searchCustomers,
+    getCustomerById: getCustomerById,
+    addCustomer: addCustomer,
+    addProject: addProject,
+    getProjectById: getProjectById,
+    searchProjects: searchProjects,
+    searchProjectsWithCustomers: searchProjectsWithCustomers
 };
