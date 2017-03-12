@@ -13,7 +13,6 @@ const compiler = webpack(config);
 const _view_dir = path.join(__dirname + '/../views');
 
 // declare static directory
-console.log(_view_dir);
 app.use(express.static(_view_dir));
 
 // Use middleware compiler

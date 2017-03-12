@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 import React, {Component, PropTypes } from 'react';
-import { ProjectPage } from '../components/ProjectPage';
+import { ProjectPage, ProjectPageEdit } from '../components/ProjectPage';
 import * as api from '../api';
 const serverString = 'localhost:3000';
 
@@ -9,13 +9,28 @@ class Project extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            project: null
+            project: null,
+            editable: false
         }
+        this.toggleEditFields = this.toggleEditFields.bind(this)
     }
 
     componentDidMount() {
         var param = window.location.href.split(serverString + "/projects/")[1] || '';
         this.fetchProjectById(param);
+    }
+
+    toggleEditFields() {
+        console.log("Edit!");
+        if(this.state.editable){
+            this.setState({
+                editable: false
+            });
+        } else {
+            this.setState({
+                editable: true
+            });
+        }
     }
 
     // Perform an async call to fetch projects
@@ -30,8 +45,21 @@ class Project extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.project) {
-        return <ProjectPage project = { this.state.project } />
-      }
+          if(this.state.editable){
+              return (
+                  <div>
+                      <ProjectPageEdit project = { this.state.project } />
+                      <button type="button" onClick={ this.toggleEditFields }>Cancel</button>
+                  </div>
+              );
+          }
+          return (
+                <div>
+                    <ProjectPage project = { this.state.project } />
+                    <button type="button" onClick={ this.toggleEditFields }>Edit</button>
+                </div>
+            );
+    }
 
       return <h1> Getting Project...</h1>
     }
@@ -40,6 +68,7 @@ class Project extends Component {
         return (
             <div>
                 {this.currentContent()}
+
             </div>
 
         )

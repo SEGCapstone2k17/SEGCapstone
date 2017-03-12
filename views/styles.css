@@ -11,6 +11,10 @@ footer {
     background-color: rgba(3, 169, 244, 0.5);
 }
 
+textarea {
+    overflow: visible;
+}
+
 .project-result {
     color: inherit;
     text-decoration: none;

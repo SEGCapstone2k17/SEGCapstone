@@ -19,6 +19,24 @@ function addCustomer(req, res, next) {
         });
 }
 
+// attempts to edit a customer in the database
+function editCustomer(req, res, next) {
+    var query = '';
+    if(req.body) {
+        let id = req.body.id;
+        let values = `(\'${req.body.fname}\', \'${req.body.lname}\',\'${req.body.gender}\',\'${req.body.title}\')`;
+        query = `UPDATE "Customer" SET ("First_Name", "Last_Name", "Gender", "Title") = ${values} WHERE "Customer"."Customer_ID" = ${id} RETURNING "Customer_ID"`;
+    }
+    db.any(query)
+        .then(data => {
+            console.log("Data is: " + data[0].Customer_ID);
+            res.redirect('/customers/' + data[0].Customer_ID);
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
 // searches for all customers
 function searchCustomers(req, res, next) {
     var query = 'SELECT * FROM "Customer"';
@@ -55,6 +73,24 @@ function addProject(req, res, next) {
     if(req.body) {
         let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\')`;
         query = `INSERT INTO "Project" ("Name", "Description", "Cost", "Currency") VALUES ${values} RETURNING "Project_ID"`;
+    }
+    db.any(query)
+        .then(data => {
+            console.log("Data is: " + data[0].Project_ID);
+            res.redirect('/projects/' + data[0].Project_ID);
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// attempts to edit a project in the database
+function editProject(req, res, next) {
+    var query = '';
+    if(req.body) {
+        let id = req.body.id;
+        let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\')`;
+        query = `UPDATE "Project" SET ("Name", "Description", "Cost", "Currency") = ${values} WHERE "Project"."Project_ID" = ${id} RETURNING "Project_ID"`;
     }
     db.any(query)
         .then(data => {
@@ -122,7 +158,9 @@ module.exports = {
     searchCustomers: searchCustomers,
     getCustomerById: getCustomerById,
     addCustomer: addCustomer,
+    editCustomer: editCustomer,
     addProject: addProject,
+    editProject: editProject,
     getProjectById: getProjectById,
     searchProjects: searchProjects,
     searchProjectsWithCustomers: searchProjectsWithCustomers
