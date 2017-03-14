@@ -35,7 +35,7 @@ class Customer extends Component {
     }
 
     removeCustomer() {
-        api.removeCustomer(this.state.customer[0].Customer_ID)
+        api.removeCustomer(this.state.customer[0].id)
             .then(deleteSucessful => {
               this.setState({
               wasDeleted: deleteSucessful
@@ -58,7 +58,7 @@ class Customer extends Component {
         if(this.state.editable){
           return (
               <div>
-                  <CustomerPageEdit customer = { this.state.customer } />
+                  <CustomerPageEdit customer = {this.state.customer} />
                   <button type="button" onClick={ this.toggleEditFields }>Cancel</button>
               </div>
           );
@@ -66,7 +66,7 @@ class Customer extends Component {
         else if(this.state.wasDeleted) {
             return(
                 <div>
-                    <h1>{ this.state.customer[0].First_Name } { this.state.customer[0].Last_Name } was sucessfully deleted</h1>
+                    <h1>{this.state.customer[0].first_name} {this.state.customer[0].last_name} was sucessfully deleted</h1>
                     <a href="/customers">
                       <button type="button">Back</button>
                     </a>
@@ -76,7 +76,7 @@ class Customer extends Component {
         else{
             return (
                 <div>
-                    <CustomerPage customer = { this.state.customer } />
+                    <CustomerPage customer = {this.state.customer} />
                     <button type="button" onClick={ this.toggleEditFields }>Edit</button>
                     <button type="button" onClick={ this.removeCustomer }>Delete</button>
                 </div>

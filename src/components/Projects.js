@@ -20,19 +20,19 @@ class ListProjects extends React.Component {
                     <div>
                         {projects.map(project => {
                           return <div>
-                                    <a className="project-result" href={`/projects/${project.Project_ID}`}>
-                                        <h3>{project.Name}</h3>
+                                    <a className="project-result" href={`/projects/${project.id}`}>
+                                        <h3>{project.name}</h3>
                                         <p>
-                                            {project.Description}
+                                            {project.description}
                                         </p>
                                         <p>
                                             <strong>Cost:</strong>
-                                            {project.Cost}$ {project.Currency}
+                                            {project.quote_cost}$
                                         </p>
                                         <p>
                                             <strong>Customer:</strong>
-                                            {project.Customer_ID ? (
-                                                <a href={`http://localhost:3000/customers/${project.Customer_ID}`}> {project.First_Name} {project.Last_Name}</a>
+                                            {project.customer_id ? (
+                                                <a href={`/customers/${project.customer_id}`}> {project.first_name} {project.last_name}</a>
                                             ) :
                                             (
                                                 <i>No customer selected...</i>
@@ -43,8 +43,6 @@ class ListProjects extends React.Component {
                                 </div>
                         })}
                     </div>
-
-
                 </div>
             </div>
         );

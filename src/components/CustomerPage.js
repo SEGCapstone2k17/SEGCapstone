@@ -9,11 +9,11 @@ class CustomerPage extends Component {
         const customer = this.props.customer[0];
         return (
             <div>
-                <h1>{customer.First_Name} {customer.Last_Name}</h1>
+                <h1>{customer.first_name} {customer.last_name}</h1>
                 <div>
                   <div>
                     <span>
-                      <strong> Gender: </strong> {customer.Gender}
+                      <strong> email: </strong> {customer.email}
                     </span>
                 </div>
                 </div>
@@ -32,20 +32,13 @@ class CustomerPageEdit extends Component {
         return (
             <div>
                 <form action="/api/editCustomer/" method="POST">
-                    <input type="hidden" name="id" value={`${customer.Customer_ID}`}/>
-                    <input required type="text" name="fname" defaultValue={`${customer.First_Name}`} placeholder="e.g. John"/>
-                    <input required type="text" name="lname" defaultValue={`${customer.Last_Name}`} placeholder="e.g. Smith"/>
-                    <select defaultValue={`${customer.Gender}`} name="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option selected value="Undisclosed">Undisclosed</option>
-                    </select>
-                    <select defaultValue={`${customer.Title}`} name="title">
-                        <option value="Mr.">Mr.</option>
-                        <option value="Mrs.">Mrs.</option>
-                        <option value="Ms.">Ms.</option>
-                        <option selected value="Undisclosed">Undisclosed</option>
-                    </select><br/>
+                    <input type="hidden" name="id" value={`${customer.id}`}/>
+                    <input required type="text" name="first_name" defaultValue={`${customer.first_name}`} placeholder="e.g. John"/><br/>
+                    <input required type="text" name="last_name" defaultValue={`${customer.last_name}`} placeholder="e.g. Smith"/><br/>
+                    <input required type="text" name="telephone" defaultValue={`${customer.telephone}`} placeholder="e.g. (000) 000 0000"/><br/>
+                    <input required type="text" name="email" defaultValue={`${customer.email}`} placeholder="e.g. jsmith@gmail.com"/><br/>
+                    <input required type="text" name="street" defaultValue={`${customer.street}`} placeholder="e.g. abc street"/><br/>
+                    <input required type="text" name="postal_code" defaultValue={`${customer.postal_code}`} placeholder="e.g. A1A 1A1"/><br/>
                     <button type="submit" value="Submit">Done</button>
                 </form>
             </div>

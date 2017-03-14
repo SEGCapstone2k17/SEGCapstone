@@ -28,7 +28,7 @@ class Projects extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.projects) {
-        return <ListProjects projects = { this.state.projects } />
+        return <ListProjects projects = {this.state.projects} />
       }
 
       return <h1> Fetching Projects...</h1>

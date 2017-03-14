@@ -38,7 +38,7 @@ class Project extends Component {
     }
 
     removeProject() {
-        api.removeProject(this.state.project[0].Project_ID)
+        api.removeProject(this.state.project[0].id)
             .then(deleteSucessful => {
               this.setState({
               wasDeleted: deleteSucessful
@@ -70,15 +70,15 @@ class Project extends Component {
           if(this.state.editable){
               return (
                   <div>
-                      <ProjectPageEdit project = { this.state.project } customers = { this.state.customers }/>
-                      <button type="button" onClick={ this.toggleEditFields }>Cancel</button>
+                      <ProjectPageEdit project = {this.state.project} customers = {this.state.customers}/>
+                      <button type="button" onClick={this.toggleEditFields}>Cancel</button>
                   </div>
               );
           }
           else if(this.state.wasDeleted) {
               return(
                   <div>
-                      <h1>{ this.state.project[0].Name } was sucessfully deleted</h1>
+                      <h1>{this.state.project[0].name} was sucessfully deleted</h1>
                       <a href="/projects">
                         <button type="button">Back</button>
                       </a>
@@ -88,9 +88,9 @@ class Project extends Component {
           else{
               return (
                     <div>
-                        <ProjectPage project = { this.state.project } />
-                        <button type="button" onClick={ this.toggleEditFields }>Edit</button>
-                        <button type="button" onClick={ this.removeProject }>Delete</button>
+                        <ProjectPage project = {this.state.project} />
+                        <button type="button" onClick={this.toggleEditFields}>Edit</button>
+                        <button type="button" onClick={this.removeProject}>Delete</button>
                     </div>
                 );
         }

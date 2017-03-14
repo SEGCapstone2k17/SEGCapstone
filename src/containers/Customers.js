@@ -28,7 +28,7 @@ class Customers extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.customers) {
-        return <ListCustomers customers = { this.state.customers } />
+        return <ListCustomers customers = {this.state.customers} />
       }
 
       return <h1> Fetching Customers...</h1>
