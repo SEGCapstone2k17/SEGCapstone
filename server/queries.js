@@ -67,17 +67,46 @@ function getCustomerById(req, res, next) {
         });
 }
 
+// deletes a specific customer
+function deleteCustomerById(req, res, next) {
+    var query = '';
+    if(req.params.id) {
+        query = 'DELETE FROM "Customer" WHERE "Customer_ID" =' + req.params.id;
+    }
+    db.any(query)
+        .then(function(){
+            res.send({deleteSucessful: true});
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
 // attempts to add a project to the database
 function addProject(req, res, next) {
     var query = '';
     if(req.body) {
-        let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\')`;
-        query = `INSERT INTO "Project" ("Name", "Description", "Cost", "Currency") VALUES ${values} RETURNING "Project_ID"`;
+        let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\', NULLIF(${req.body.customer}, -1))`;
+        query = `INSERT INTO "Project" ("Name", "Description", "Cost", "Currency", "Customer_ID") VALUES ${values} RETURNING "Project_ID"`;
     }
     db.any(query)
         .then(data => {
-            console.log("Data is: " + data[0].Project_ID);
             res.redirect('/projects/' + data[0].Project_ID);
+        })
+        .catch(err => {
+            return next(err);
+        });
+}
+
+// deletes a specific project
+function deleteProjectById(req, res, next) {
+    var query = '';
+    if(req.params.id) {
+        query = 'DELETE FROM "Project" WHERE "Project_ID" =' + req.params.id;
+    }
+    db.any(query)
+        .then(function(){
+            res.send({deleteSucessful: true});
         })
         .catch(err => {
             return next(err);
@@ -89,12 +118,11 @@ function editProject(req, res, next) {
     var query = '';
     if(req.body) {
         let id = req.body.id;
-        let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\')`;
-        query = `UPDATE "Project" SET ("Name", "Description", "Cost", "Currency") = ${values} WHERE "Project"."Project_ID" = ${id} RETURNING "Project_ID"`;
+        let values = `(\'${req.body.name}\', \'${req.body.description}\',${req.body.cost},\'${req.body.currency}\', NULLIF(${req.body.customer}, -1))`;
+        query = `UPDATE "Project" SET ("Name", "Description", "Cost", "Currency", "Customer_ID") = ${values} WHERE "Project"."Project_ID" = ${id} RETURNING "Project_ID"`;
     }
     db.any(query)
         .then(data => {
-            console.log("Data is: " + data[0].Project_ID);
             res.redirect('/projects/' + data[0].Project_ID);
         })
         .catch(err => {
@@ -158,8 +186,10 @@ module.exports = {
     searchCustomers: searchCustomers,
     getCustomerById: getCustomerById,
     addCustomer: addCustomer,
+    deleteCustomerById: deleteCustomerById,
     editCustomer: editCustomer,
     addProject: addProject,
+    deleteProjectById: deleteProjectById,
     editProject: editProject,
     getProjectById: getProjectById,
     searchProjects: searchProjects,

@@ -24,6 +24,11 @@ api_routes.get('/customers/:id', function(req, res, next) {
     db.getCustomerById(req, res, next);
 });
 
+api_routes.delete('/customers/:id', function(req, res, next) {
+    console.log('Deleting customer by id');
+    db.deleteCustomerById(req, res, next);
+});
+
 api_routes.post('/addProject', function(req,res,next){
     console.log('Adding project');
     db.addProject(req,res,next);
@@ -43,6 +48,11 @@ api_routes.get('/projects', function(req, res, next){
 api_routes.get('/projects/:id', function(req, res, next) {
     console.log('Getting project by id');
     db.getProjectById(req, res, next);
+});
+
+api_routes.delete('/projects/:id', function(req, res, next) {
+    console.log('Deleting project by id');
+    db.deleteProjectById(req, res, next);
 });
 
 module.exports = api_routes;

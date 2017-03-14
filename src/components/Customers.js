@@ -18,12 +18,14 @@ class ListCustomers extends React.Component {
                 <div>
                     {customers.map(customer => {
                       return <div>
+                                <a className="customer-result" href={`/customers/${customer.Customer_ID}`}>
                                 <span>
                                     <strong>Name: </strong> {customer.First_Name} {customer.Last_Name}
                                 </span>
                                 <span>
                                   <strong> Gender: </strong> {customer.Gender}
                                 </span>
+                                </a>
                             </div>
                     })}
                 </div>

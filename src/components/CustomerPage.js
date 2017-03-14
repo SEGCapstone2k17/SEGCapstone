@@ -45,7 +45,7 @@ class CustomerPageEdit extends Component {
                         <option value="Mrs.">Mrs.</option>
                         <option value="Ms.">Ms.</option>
                         <option selected value="Undisclosed">Undisclosed</option>
-                    </select>
+                    </select><br/>
                     <button type="submit" value="Submit">Done</button>
                 </form>
             </div>

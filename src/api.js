@@ -11,6 +11,11 @@ function fetchCustomers(query) {
          .then(res => res.data.customers);
 }
 
+function removeCustomer(id) {
+    return axios.delete('http://localhost:3000/api/customers/' + id)
+        .then(res => res.data.deleteSucessful);
+}
+
 function fetchProjects(query) {
     return axios.get('http://localhost:3000/api/projects/?' + query)
         .then(res => res.data.projects);
@@ -21,9 +26,16 @@ function fetchProjectById(param) {
           .then(res => res.data.projects);
 }
 
+function removeProject(id) {
+    return axios.delete('http://localhost:3000/api/projects/' + id)
+        .then(res => res.data.deleteSucessful);
+}
+
 module.exports = {
     fetchCustomers: fetchCustomers,
     fetchCustomerById: fetchCustomerById,
+    removeCustomer: removeCustomer,
     fetchProjects: fetchProjects,
-    fetchProjectById: fetchProjectById
+    fetchProjectById: fetchProjectById,
+    removeProject: removeProject
 }

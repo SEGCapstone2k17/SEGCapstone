@@ -9,7 +9,7 @@ import Customer from './containers/CustomerPage';
 import Project from './containers/ProjectPage';
 import { Summary } from './components/Summary';
 import { AddCustomer } from './components/AddCustomer';
-import { AddProject } from './components/AddProject';
+import AddProject from './containers/AddProject';
 
 let rootElement = document.getElementById('app');
 

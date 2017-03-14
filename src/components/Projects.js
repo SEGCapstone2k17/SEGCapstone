@@ -20,7 +20,7 @@ class ListProjects extends React.Component {
                     <div>
                         {projects.map(project => {
                           return <div>
-                                    <a className="project-result" href={`http://localhost:3000/projects/${project.Project_ID}`}>
+                                    <a className="project-result" href={`/projects/${project.Project_ID}`}>
                                         <h3>{project.Name}</h3>
                                         <p>
                                             {project.Description}

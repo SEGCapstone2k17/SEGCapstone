@@ -32,18 +32,25 @@ class ProjectPageEdit extends Component {
 
     render() {
         const project = this.props.project[0];
+        const customers = this.props.customers;
         return (
             <div>
                 <form action="/api/editProject/" method="POST">
                     <input type="hidden" name="id" value={`${project.Project_ID}`}/>
                     <br/><input required type="text" name="name" defaultValue={`${project.Name}`} placeholder="e.g. Floor Renovation"/><br/>
-                    <textarea required name="description" defaultValue={`${project.Description}`} placeholder="This project is about..."/><br/>
-                    <input required type="number" name="cost" defaultValue={`${project.Cost}`} placeholder="Dollars (CAD)"/><br/>
+                    <input required type="number" name="cost" defaultValue={`${project.Cost}`} placeholder="Dollars (CAD)"/>
                     <select defaultValue={`${project.Currency}`} name="currency">
                         <option value="CAD">CAD</option>
                         <option value="EUR">EUR</option>
                         <option value="USD">USD</option>
                     </select><br/>
+                    <select defaultValue={`${project.Customer_ID}`} name="customer">
+                        <option value="-1">None</option>
+                        {customers.map(customer => {
+                            return <option value={`${customer.Customer_ID}`}>{customer.First_Name} {customer.Last_Name}</option>
+                        })}
+                    </select><br/>
+                    <textarea required name="description" defaultValue={`${project.Description}`} placeholder="This project is about..."/><br/>
                     <button type="submit" value="Submit">Done</button>
                 </form>
             </div>

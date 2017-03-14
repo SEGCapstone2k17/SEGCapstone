@@ -9,9 +9,11 @@ class Customer extends Component {
         super(props);
         this.state = {
             customer: null,
-            editable: false
+            editable: false,
+            wasDeleted: false
         }
-        this.toggleEditFields = this.toggleEditFields.bind(this)
+        this.toggleEditFields = this.toggleEditFields.bind(this);
+        this.removeCustomer = this.removeCustomer.bind(this);
     }
 
     componentDidMount() {
@@ -30,6 +32,15 @@ class Customer extends Component {
                 editable: true
             });
         }
+    }
+
+    removeCustomer() {
+        api.removeCustomer(this.state.customer[0].Customer_ID)
+            .then(deleteSucessful => {
+              this.setState({
+              wasDeleted: deleteSucessful
+            })
+        })
     }
 
     // Perform an async call to fetch customers
@@ -52,15 +63,29 @@ class Customer extends Component {
               </div>
           );
         }
-        return (
-            <div>
-                <CustomerPage customer = { this.state.customer } />
-                <button type="button" onClick={ this.toggleEditFields }>Edit</button>
-            </div>
-        );
-      }
-
+        else if(this.state.wasDeleted) {
+            return(
+                <div>
+                    <h1>{ this.state.customer[0].First_Name } { this.state.customer[0].Last_Name } was sucessfully deleted</h1>
+                    <a href="/customers">
+                      <button type="button">Back</button>
+                    </a>
+                </div>
+            );
+        }
+        else{
+            return (
+                <div>
+                    <CustomerPage customer = { this.state.customer } />
+                    <button type="button" onClick={ this.toggleEditFields }>Edit</button>
+                    <button type="button" onClick={ this.removeCustomer }>Delete</button>
+                </div>
+            );
+        }
+    }
+    else{
       return <h1> Getting Customer...</h1>
+    }
     }
 
     render() {
@@ -68,7 +93,6 @@ class Customer extends Component {
             <div>
                 {this.currentContent()}
             </div>
-
         )
     }
 }

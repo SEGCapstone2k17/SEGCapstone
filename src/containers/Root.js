@@ -9,27 +9,27 @@ export default class Root extends Component {
         return (
             <div className="app-container">
                 <header>
-                    <a href="http://localhost:3000">
+                    <a href="/">
                         <span>
                             Home
                         </span>
                     </a>
-                    <a href="http://localhost:3000/projects/">
+                    <a href="/projects">
                         <span>
                             Projects
                         </span>
                     </a>
-                    <a href="http://localhost:3000/addProject/">
+                    <a href="/addProject">
                         <span>
                             Add Project
                         </span>
                     </a>
-                    <a href="http://localhost:3000/customers/">
+                    <a href="/customers/">
                         <span>
                             Customers
                         </span>
                     </a>
-                    <a href="http://localhost:3000/addCustomer/">
+                    <a href="/addCustomer/">
                         <span>
                             Add Customer
                         </span>

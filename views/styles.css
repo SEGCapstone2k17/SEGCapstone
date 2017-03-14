@@ -13,9 +13,11 @@ footer {
 
 textarea {
     overflow: visible;
+    width: 30%;
+    height: 100px;
 }
 
-.project-result {
+.project-result, .customer-result {
     color: inherit;
     text-decoration: none;
 }
