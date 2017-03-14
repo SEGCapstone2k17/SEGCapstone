@@ -37,17 +37,6 @@ class Project extends Component {
         }
     }
 
-    // removeProject() {
-    //     let isDeleted = false;
-    //     api.removeProject(this.state.project[0].Project_ID)
-    //     .then(deleteSucessful => isDeleted = deleteSucessful
-    //     ).then(function(){
-    //         if(isDeleted){
-    //             console.log("Was deleted sucessfully");
-    //         }
-    //     })
-    // }
-
     removeProject() {
         api.removeProject(this.state.project[0].Project_ID)
             .then(deleteSucessful => {
