@@ -10,7 +10,7 @@ var reactdom = require('react-dom');
 const routes = require('./routes');
 const app = new express();
 const compiler = webpack(config);
-const _view_dir = path.join(__dirname + '/../views');
+const _view_dir = path.join(__dirname + '/../public');
 
 // declare static directory
 app.use(express.static(_view_dir));

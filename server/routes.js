@@ -2,7 +2,7 @@ var api = require('./api');
 var path = require ('path');
 const routes = require('express').Router();
 
-const _view_path = path.join(__dirname + '/../views/index.html');
+const _view_path = path.join(__dirname + '/../public/index.html');
 
 routes.get('/', function(req, res){
     res.sendFile(_view_path);
