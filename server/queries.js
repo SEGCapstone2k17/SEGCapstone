@@ -6,8 +6,8 @@ var db = pgp(connectionString);
 function addCustomer(req, res, next) {
     var query = '';
     if(req.body) {
-        let values = `(\'${req.body.first_name}\', \'${req.body.last_name}\',\'${req.body.telephone}\',\'${req.body.email}\',\'${req.body.street}\',\'${req.body.postal_code}\')`;
-        query = `INSERT INTO customer ("first_name", "last_name", "telephone", "email", "street", "postal_code") VALUES ${values} RETURNING id`;
+        let values = `(\'${req.body.fName}\', \'${req.body.lName}\',\'${req.body.phone}\',\'${req.body.email}\',\'${req.body.street}\',\'${req.body.postalCode}\',\'${req.body.city}\')`;
+        query = `INSERT INTO customer ("first_name", "last_name", "telephone", "email", "street", "postal_code", "city") VALUES ${values} RETURNING id`;
     }
     db.any(query)
         .then(data => {
@@ -23,8 +23,8 @@ function editCustomer(req, res, next) {
     var query = '';
     if(req.body) {
         let id = req.body.id;
-        let values = `(\'${req.body.first_name}\', \'${req.body.last_name}\',\'${req.body.telephone}\',\'${req.body.email}\',\'${req.body.street}\',\'${req.body.postal_code}\')`;
-        query = `UPDATE customer SET ("first_name", "last_name", "telephone", "email", "street", "postal_code") = ${values} WHERE id = ${id} RETURNING id`;
+        let values = `(\'${req.body.fName}\', \'${req.body.lName}\',\'${req.body.phone}\',\'${req.body.email}\',\'${req.body.street}\',\'${req.body.postalCode}\', \'${req.body.city}\')`;
+        query = `UPDATE customer SET ("first_name", "last_name", "telephone", "email", "street", "postal_code", "city") = ${values} WHERE id = ${id} RETURNING id`;
     }
     db.any(query)
         .then(data => {
@@ -84,8 +84,8 @@ function deleteCustomerById(req, res, next) {
 function addProject(req, res, next) {
     var query = '';
     if(req.body) {
-        let values = `(\'${req.body.name}\', \'${req.body.description}\',\'${req.body.street}\',\'${req.body.postal_code}\',\'${req.body.city}\',\'${req.body.start_date}\',\'${req.body.end_date}\',${req.body.quote_cost},\'${req.body.actual_cost}\', NULLIF(${req.body.customer}, -1))`;
-        query = `INSERT INTO project ("name", "description","street", "postal_code", "city", "start_date", "end_date", "quote_cost", "actual_cost", "customer_id") VALUES ${values} RETURNING id`;
+        let values = `(\'${req.body.fName}\', \'${req.body.description}\',\'${req.body.street}\',\'${req.body.postalCode}\',\'${req.body.city}\',\'${req.body.startDate}\',\'${req.body.endDate}\',${req.body.estimatedCost},\'${req.body.actualCost}\',${req.body.type}, NULLIF(${req.body.customer}, -1))`;
+        query = `INSERT INTO project ("name", "description","street", "postal_code", "city", "start_date", "end_date", "quote_cost", "actual_cost", "project_type_id", "customer_id") VALUES ${values} RETURNING id`;
     }
     db.any(query)
         .then(data => {
@@ -116,7 +116,7 @@ function editProject(req, res, next) {
     var query = '';
     if(req.body) {
         let id = req.body.id;
-        let values = `(\'${req.body.name}\', \'${req.body.description}\',\'${req.body.street}\',\'${req.body.postal_code}\',\'${req.body.city}\',\'${req.body.start_date}\',\'${req.body.end_date}\',${req.body.quote_cost},\'${req.body.actual_cost}\', NULLIF(${req.body.customer}, -1))`;
+        let values = `(\'${req.body.fName}\', \'${req.body.description}\',\'${req.body.street}\',\'${req.body.postalCode}\',\'${req.body.city}\',\'${req.body.startDate}\',\'${req.body.endDate}\',${req.body.estimatedCost},\'${req.body.actualCost}\', NULLIF(${req.body.customer}, -1))`;
         query = `UPDATE project SET ("name", "description","street", "postal_code", "city", "start_date", "end_date", "quote_cost", "actual_cost", "customer_id") = ${values} WHERE id = ${id} RETURNING id`;
     }
     db.any(query)

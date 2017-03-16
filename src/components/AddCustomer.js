@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
-import React, {ProptTypes, Component} from 'react'
+import React, {ProptTypes, Component} from 'react';
+import {Header} from './Header';
 
 class AddCustomer extends Component {
     constructor(props) {
@@ -8,19 +9,89 @@ class AddCustomer extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Add Customer!</h1>
-                <form action="/api/addCustomer/" method="POST">
-                    <input required type="text" name="first_name" placeholder="e.g. John"/><br/>
-                    <input required type="text" name="last_name" placeholder="e.g. Smith"/><br/>
-                    <input required type="text" name="telephone" placeholder="e.g. (000) 000 0000"/><br/>
-                    <input required type="text" name="email" placeholder="e.g. jsmith@gmail.com"/><br/>
-                    <input required type="text" name="street" placeholder="e.g. abc street"/><br/>
-                    <input required type="text" name="postal_code" placeholder="e.g. A1A 1A1"/><br/>
-                    <button type="submit" value="Submit">Add</button>
-                </form>
+            <div id="dashboard">
+                <Header />
+                <PageNavigation />
+                <DashboardOther />
             </div>
         );
+    }
+}
+
+class PageNavigation extends Component {
+    render(){
+        return (
+            <div id="page-navigation">
+                <ul>
+                  <li>
+                    <a href="#">Overview</a>
+                  </li>
+                  <li>
+                    <a href="/customers">Search</a>
+                  </li>
+                  <li className="active">
+                    <a href="/addCustomer">Add</a>
+                  </li>
+                </ul>
+            </div>
+        )
+    }
+}
+
+class DashboardOther extends Component {
+    render(){
+        return (
+            <div id="dashboard-other">
+                <div className="row">
+                  <div className="small-12 columns">
+                    <h2>Add a New Client</h2>
+                    <form action="/api/addCustomer" method="POST">
+                        <div id="client-add" className="dashboard-block">
+                          <div className="row">
+                            <div className="small-12 medium-6 columns">
+                              <label htmlFor="client-first-name">First Name <span className="required">*</span></label>
+                              <input type="text" name="fName" className="client-text-form" id="client-first-name" required />
+                            </div>
+                            <div className="small-12 medium-6 columns">
+                              <label htmlFor="client-last-name">Last Name <span className="required">*</span></label>
+                              <input type="text" name="lName" className="client-text-form" id="client-last-name" required />
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="small-12 medium-6 columns">
+                              <label htmlFor="client-email">Email</label>
+                              <input type="email" name="email" className="client-text-form" id="client-email" />
+                            </div>
+                            <div className="small-12 medium-6 columns">
+                              <label htmlFor="client-phone">Phone Number <span className="required">*</span></label>
+                              <input type="text" name="phone" className="client-text-form" id="client-phone" required />
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="small-12 medium-4 columns">
+                              <label htmlFor="client-street">Street <span className="required">*</span></label>
+                              <input type="text" name="street" className="client-text-form" id="client-street" required />
+                            </div>
+                            <div className="small-12 medium-4 columns">
+                              <label htmlFor="client-postal-code">Postal Code <span className="required">*</span></label>
+                              <input type="text" name="postalCode" className="client-text-form" id="client-postal-code" required />
+                            </div>
+                            <div className="small-12 medium-4 columns">
+                              <label htmlFor="client-city">City <span className="required">*</span></label>
+                              <select name="city" className="client-select-form" id="client-city" required>
+                                <option value="Ottawa">Ottawa</option>
+                              </select>
+                            </div>
+                          </div>
+                          <p className="required-info">Fields marked with * are required.</p>
+                          <input type="submit" name="submit" className="btn" id="client-submit" defaultValue="Add Client" />
+                        </div>
+                    </form>
+                    {/* End #client-add */}
+                  </div>
+                </div>
+          </div>
+        )
     }
 }
 
