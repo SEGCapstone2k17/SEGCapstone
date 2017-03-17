@@ -1,12 +1,12 @@
 import React, {PropTypes, Component} from 'react';
 
 class Header extends Component {
-    render(){
+    render() {
         return (
             <div id="header" className="clearfix">
                 <div id="header-page-title">
                   <a href="#" id="sidebar-toggle"><i className="fa fa-bars" aria-hidden="true" /></a>
-                  <h1>Clients</h1>
+                  <h1>{this.props.title}</h1>
                 </div>
                 {/* End header-page-title */}
                 <div id="header-user-actions">
@@ -30,7 +30,7 @@ class Header extends Component {
                 </div>
                 {/* End header-user */}
           </div>
-        )
+      );
     }
 }
 

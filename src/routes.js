@@ -10,19 +10,23 @@ import Project from './containers/ProjectPage';
 import { Summary } from './components/Summary';
 import { AddCustomer } from './components/AddCustomer';
 import AddProject from './containers/AddProject';
+import EditProject from './containers/EditProject';
+import EditCustomer from './containers/EditCustomer';
 
 let rootElement = document.getElementById('app');
 
 render((
         <Router history = {browserHistory}>
             <Route path = "/" component = {Root}>
-                <IndexRoute component = { Summary } />
-                <Route path = "customers" component = { Customers } />
-                <Route path = "customers/:id" component = { Customer } />
-                <Route path = "addCustomer" component = { AddCustomer } />
-                <Route path = "projects" component = { Projects } />
-                <Route path = "projects/:id" component = { Project } />
-                <Route path = "addProject" component = { AddProject } />
+                <IndexRoute component = {Summary} />
+                <Route path = "customers" component = {Customers} />
+                <Route path = "customers/:id" component = {Customer} />
+                <Route path = "addCustomer" component = {AddCustomer} />
+                <Route path = "editCustomer/:id" component = {EditCustomer} />
+                <Route path = "projects" component = {Projects} />
+                <Route path = "projects/:id" component = {Project} />
+                <Route path = "addProject" component = {AddProject} />
+                <Route path = "editProject/:id" component = {EditProject} />
             </Route>
         </Router>
 ), rootElement);

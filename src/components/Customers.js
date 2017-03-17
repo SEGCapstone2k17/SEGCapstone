@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import React, {PropTypes, Component} from "react";
 import {Header} from "./Header";
 
@@ -10,9 +9,9 @@ class ListCustomers extends React.Component {
     render() {
         return (
             <div id="dashboard">
-                <Header />
+                <Header title="Clients"/>
                 <PageNavigation />
-                <DashboardOther customers = {this.props.customers} />
+                <DashboardOther customers = {this.props.customers} removeCustomer = {this.props.removeCustomer} />
             </div>
         );
     }
@@ -34,7 +33,7 @@ class PageNavigation extends Component {
                   </li>
                 </ul>
             </div>
-        )
+        );
     }
 }
 
@@ -50,7 +49,7 @@ class DashboardOther extends Component {
                           <div className="row">
                             <div className="small-12 large-8 columns">
                               <div id="client-search">
-                                <form action="/customers" method="GET" >
+                                <form action="/customers/" method="GET" >
                                     <button type="submit"><i className="fa fa-search" aria-hidden="true" /></button>
                                     <input type="text" name="s" placeholder="Search for clients" />
                                 </form>
@@ -77,7 +76,7 @@ class DashboardOther extends Component {
                     </div>
                     <div className="row">
                       <div className="small-12 large-8 columns">
-                        <h2>Clients (20)</h2>
+                        <h2>Clients ({customers.length})</h2>
                         {customers.map(customer => {
                             return (
                                 <div className="client-result dashboard-block">
@@ -93,15 +92,15 @@ class DashboardOther extends Component {
                                     </div>
                                     <div className="small-12 large-3 columns">
                                       <div className="client-result-actions">
-                                        <a className="btn-dark" href={`customer/${customer.id}`}>View Client</a>
-                                        <a className="btn-dark" href="#">Edit Client</a>
-                                        <a className="btn-dark" href="#">Delete Client</a>
+                                        <a className="btn-dark" href={`/customers/${customer.id}`}>View Client</a>
+                                        <a className="btn-dark" href={`/editCustomer/${customer.id}`}>Edit Client</a>
+                                        <a className="btn-dark" onClick={(event) => this.props.removeCustomer(customer.id, event)}>Delete Client</a>
                                       </div>
                                       {/* End client-result-actions */}
                                     </div>
                                   </div>
                                 </div>
-                        )
+                        );
                         })}
                       </div>
                       <div className="small-12 large-4 columns">
@@ -116,7 +115,7 @@ class DashboardOther extends Component {
                       </div>
                     </div>
           </div>
-        )
+      );
     }
 }
 

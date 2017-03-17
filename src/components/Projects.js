@@ -10,16 +10,16 @@ class ListProjects extends Component {
     render() {
         return (
             <div id="dashboard">
-                <Header />
+                <Header title="Projects"/>
                 <PageNavigation />
-                <DashboardOther projects = {this.props.projects} />
+                <DashboardOther projects = {this.props.projects} removeProject = {this.props.removeProject} />
             </div>
         );
     }
 }
 
 class PageNavigation extends Component {
-    render(){
+    render() {
         return (
             <div id="page-navigation">
               <ul>
@@ -35,7 +35,7 @@ class PageNavigation extends Component {
               </ul>
               {/* End page-navigation */}
             </div>
-        )
+        );
     }
 }
 
@@ -51,7 +51,7 @@ class DashboardOther extends Component{
                            <div className="row">
                                <div className="small-12 large-6 columns">
                                    <div id="project-search">
-                                       <form action="/projects" method="GET" >
+                                       <form action="/projects/" method="GET" >
                                        <button type="submit"><i className="fa fa-search" aria-hidden="true"></i></button>
                                        <input type="text" name="s" placeholder="Search for projects" />
                                        </form>
@@ -94,7 +94,7 @@ class DashboardOther extends Component{
                </div>
                <div className="row">
                    <div className="small-12 large-8 columns">
-                       <h2>Projects (20)</h2>
+                       <h2>Projects ({projects.length})</h2>
                        {projects.map(project => {
                            return (
                                <div className="project-result dashboard-block">
@@ -113,14 +113,14 @@ class DashboardOther extends Component{
                                        <div className="small-12 large-3 columns">
                                            <div className="project-result-actions">
                                                <a className="btn-dark" href={`/projects/${project.id}`}>View Project</a>
-                                               <a className="btn-dark" href="#">Edit Project</a>
-                                               <a className="btn-dark" href="#">Delete Project</a>
+                                               <a className="btn-dark" href={`/editProject/${project.id}`}>Edit Project</a>
+                                               <a className="btn-dark" onClick={(event) => this.props.removeProject(project.id, event)}>Delete Project</a>
                                            </div>
                                            {/* End project-result-actions */}
                                        </div>
                                    </div>
                                </div>
-                               )
+                           );
                         })}
                        {/* End project-result */}
                    </div>
@@ -137,7 +137,7 @@ class DashboardOther extends Component{
                </div>
                 {/* End dashboard-other */}
             </div>
-        )
+        );
     }
 }
 

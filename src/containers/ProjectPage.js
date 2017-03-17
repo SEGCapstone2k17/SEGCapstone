@@ -1,5 +1,4 @@
-/*jshint esversion: 6 */
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, Component} from 'react';
 import {ProjectPage, ProjectPageEdit} from '../components/ProjectPage';
 import * as api from '../api';
 const serverString = 'localhost:3000';
@@ -11,11 +10,16 @@ class Project extends Component {
         this.state = {
             project: null,
             customers: null,
-            editable: false,
             wasDeleted: false
         };
-        this.toggleEditFields = this.toggleEditFields.bind(this);
         this.removeProject = this.removeProject.bind(this);
+    }
+
+    componentWillMount() {
+        const script = document.createElement("script");
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOjbuBTgrJHH1hhpXqPCCThoIkFKWm3Wk&callback=initMap";
+        script.async = true;
+        document.body.appendChild(script);
     }
 
     componentDidMount() {
@@ -24,29 +28,15 @@ class Project extends Component {
         this.fetchCustomers('');
     }
 
-    toggleEditFields() {
-        console.log("Edit!");
-        if(this.state.editable){
-            this.setState({
-                editable: false
-            });
-        } else {
-            this.setState({
-                editable: true
-            });
-        }
-    }
-
-    removeProject() {
-        api.removeProject(this.state.project[0].id)
+    removeProject(removed_project) {
+        api.removeProject(removed_project.id)
             .then(deleteSucessful => {
-              this.setState({
-              wasDeleted: deleteSucessful
-            })
+                alert(`[${removed_project.id}] ${removed_project.name} was successfully removed!`);
+                window.location.href = "/projects";
         })
     }
 
-    // Perform an async call to fetch projects
+    // Perform an async call to fetch specific project
     fetchProjectById(param) {
         api.fetchProjectById(param).then(project => {
           this.setState({
@@ -67,33 +57,11 @@ class Project extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.project) {
-          if(this.state.editable){
-              return (
-                  <div>
-                      <ProjectPageEdit project = {this.state.project} customers = {this.state.customers}/>
-                      <button type="button" onClick={this.toggleEditFields}>Cancel</button>
-                  </div>
-              );
-          }
-          else if(this.state.wasDeleted) {
-              return(
-                  <div>
-                      <h1>{this.state.project[0].name} was sucessfully deleted</h1>
-                      <a href="/projects">
-                        <button type="button">Back</button>
-                      </a>
-                  </div>
-              );
-          }
-          else{
-              return (
-                    <div>
-                        <ProjectPage project = {this.state.project} />
-                        <button type="button" onClick={this.toggleEditFields}>Edit</button>
-                        <button type="button" onClick={this.removeProject}>Delete</button>
-                    </div>
-                );
-        }
+          return (
+                <div>
+                    <ProjectPage project = {this.state.project} removeProject = {this.removeProject}/>
+                </div>
+            );
     }
     else{
       return <h1> Getting Project...</h1>

@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import axios from 'axios';
 
 function fetchCustomers(query) {
@@ -26,6 +25,11 @@ function fetchProjectById(param) {
           .then(res => res.data.projects);
 }
 
+function fetchCustomerProjects(param) {
+    return axios.get('http://localhost:3000/api/customer-projects/' + param)
+        .then(res => res.data.projects);
+}
+
 function removeProject(id) {
     return axios.delete('http://localhost:3000/api/projects/' + id)
         .then(res => res.data.deleteSucessful);
@@ -37,5 +41,6 @@ module.exports = {
     removeCustomer: removeCustomer,
     fetchProjects: fetchProjects,
     fetchProjectById: fetchProjectById,
+    fetchCustomerProjects: fetchCustomerProjects,
     removeProject: removeProject
 }

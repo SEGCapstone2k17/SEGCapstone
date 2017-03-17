@@ -116,8 +116,8 @@ function editProject(req, res, next) {
     var query = '';
     if(req.body) {
         let id = req.body.id;
-        let values = `(\'${req.body.fName}\', \'${req.body.description}\',\'${req.body.street}\',\'${req.body.postalCode}\',\'${req.body.city}\',\'${req.body.startDate}\',\'${req.body.endDate}\',${req.body.estimatedCost},\'${req.body.actualCost}\', NULLIF(${req.body.customer}, -1))`;
-        query = `UPDATE project SET ("name", "description","street", "postal_code", "city", "start_date", "end_date", "quote_cost", "actual_cost", "customer_id") = ${values} WHERE id = ${id} RETURNING id`;
+        let values = `(\'${req.body.fName}\', \'${req.body.description}\',\'${req.body.street}\',\'${req.body.postalCode}\',\'${req.body.city}\',\'${req.body.startDate}\',\'${req.body.endDate}\',${req.body.estimatedCost},\'${req.body.actualCost}\',${req.body.type}, NULLIF(${req.body.customer}, -1))`;
+        query = `UPDATE project SET ("name", "description","street", "postal_code", "city", "start_date", "end_date", "quote_cost", "actual_cost", "project_type_id", "customer_id") = ${values} WHERE id = ${id} RETURNING id`;
     }
     db.any(query)
         .then(data => {
@@ -143,32 +143,38 @@ function getProjectById(req, res, next) {
         });
 }
 
-// searches for projects without returning any customer information
-function searchProjects(req, res, next){
-    var query = 'SELECT * FROM project';
-    if(req.query.s) {
-        query = 'SELECT * FROM project WHERE LOWER("name") LIKE LOWER(\'%' + req.query.s + '%\')';
+// retrieves all projects associated with a specific customer
+function getCustomerProjects(req, res, next) {
+    var query = '';
+    if(req.params.id) {
+        query = 'SELECT project.* FROM project ' +
+                'INNER JOIN customer ' +
+                'ON project.customer_id =' + req.params.id;
     }
     db.any(query)
-      .then(data => {
-        res.send({projects: data});
-      })
-      .catch(err => {
-        return next(err);
-      });
+        .then(data => {
+            res.send({projects: data});
+        })
+        .catch(err => {
+            return next(err);
+        });
 }
 
 // searches for projects while also returning basic customer information
-function searchProjectsWithCustomers(req, res, next){
-    var query = 'SELECT project.*, customer.first_name, customer.last_name '+
+function searchProjects(req, res, next){
+    var query = 'SELECT project.*, project_type.type, customer.first_name, customer.last_name '+
                 'FROM project ' +
                 'LEFT JOIN customer ' +
-                'ON project.customer_id = customer.id';
+                'ON project.customer_id = customer.id ' +
+                'LEFT JOIN project_type ' +
+                'ON project.project_type_id = project_type.id ';
     if(req.query.s) {
-        query = 'SELECT project.*, customer.first_name, customer.last_name '+
+        query = 'SELECT project.*, project_type.type, customer.first_name, customer.last_name '+
                 'FROM project ' +
                 'LEFT JOIN customer ' +
                 'ON project.customer_id = customer.id '+
+                'LEFT JOIN project_type ' +
+                'ON project.project_type_id = project_type.id ' +
                 'WHERE LOWER(project.name) LIKE LOWER(\'%' + req.query.s + '%\')';
     }
     db.any(query)
@@ -190,6 +196,6 @@ module.exports = {
     deleteProjectById: deleteProjectById,
     editProject: editProject,
     getProjectById: getProjectById,
-    searchProjects: searchProjects,
-    searchProjectsWithCustomers: searchProjectsWithCustomers
+    getCustomerProjects: getCustomerProjects,
+    searchProjects: searchProjects
 };

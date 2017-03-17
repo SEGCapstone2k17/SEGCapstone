@@ -1,7 +1,7 @@
-var express = require('express');
-var api_routes = express.Router();
+import express from 'express';
+import db from './queries';
 
-var db = require('./queries');
+var api_routes = express.Router();
 
 api_routes.post('/addCustomer', function(req,res,next){
     console.log('Adding customer');
@@ -42,12 +42,17 @@ api_routes.post('/editProject', function(req,res,next){
 // Get the current list of filtered projects
 api_routes.get('/projects', function(req, res, next){
     console.log("Searching projects");
-    db.searchProjectsWithCustomers(req, res, next);
+    db.searchProjects(req, res, next);
 });
 
 api_routes.get('/projects/:id', function(req, res, next) {
     console.log('Getting project by id');
     db.getProjectById(req, res, next);
+});
+
+api_routes.get('/customer-projects/:id', function(req, res, next) {
+    console.log('Getting projects associated with specified customer');
+    db.getCustomerProjects(req, res, next);
 });
 
 api_routes.delete('/projects/:id', function(req, res, next) {

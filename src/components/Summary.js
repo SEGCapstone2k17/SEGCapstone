@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import React, { PropTypes, Component } from 'react';
 
 class Summary extends React.Component {
@@ -17,8 +16,8 @@ class Summary extends React.Component {
 }
 
 class Dashboard extends Component {
-    render(){
-        return(
+    render() {
+        return (
             <div id="dashboard">
               <div id="header" className="clearfix">
                   <div id="header-page-title">
@@ -139,7 +138,7 @@ class Dashboard extends Component {
               {/* End dashboard-other */}
           {/* End dashboard */}
           </div>
-            )
+      );
         }
 }
 

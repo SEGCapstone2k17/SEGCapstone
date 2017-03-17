@@ -1,6 +1,5 @@
-/*jshint esversion: 6 */
-import React, {Component, PropTypes } from 'react';
-import { CustomerPage, CustomerPageEdit } from '../components/CustomerPage';
+import React, {Component, PropTypes} from 'react';
+import {CustomerPage} from '../components/CustomerPage';
 import * as api from '../api';
 const serverString = 'localhost:3000';
 
@@ -9,37 +8,30 @@ class Customer extends Component {
         super(props);
         this.state = {
             customer: null,
-            editable: false,
-            wasDeleted: false
+            projects: null
         }
-        this.toggleEditFields = this.toggleEditFields.bind(this);
         this.removeCustomer = this.removeCustomer.bind(this);
+        this.removeProject = this.removeProject.bind(this);
+    }
+
+    componentWillMount() {
+        const script = document.createElement("script");
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCOjbuBTgrJHH1hhpXqPCCThoIkFKWm3Wk&callback=initMap";
+        script.async = true;
+        document.body.appendChild(script);
     }
 
     componentDidMount() {
         var param = window.location.href.split(serverString + "/customers/")[1] || '';
         this.fetchCustomerById(param);
+        this.fetchProjects(param);
     }
 
-    toggleEditFields() {
-        console.log("Edit!");
-        if(this.state.editable){
-            this.setState({
-                editable: false
-            });
-        } else {
-            this.setState({
-                editable: true
-            });
-        }
-    }
-
-    removeCustomer() {
-        api.removeCustomer(this.state.customer[0].id)
+    removeCustomer(removed_customer) {
+        api.removeCustomer(removed_customer.id)
             .then(deleteSucessful => {
-              this.setState({
-              wasDeleted: deleteSucessful
-            })
+                alert(`[${removed_customer.id}] ${removed_customer.first_name} ${removed_customer.last_name} was successfully removed!`);
+                window.location.href = "/customers";
         })
     }
 
@@ -52,40 +44,37 @@ class Customer extends Component {
       });
     }
 
+    // Perform an async call to fetch projects
+    fetchProjects(param) {
+        api.fetchCustomerProjects(param).then(projects => {
+          this.setState({
+          projects
+        });
+      });
+    }
+
+    removeProject(id,event) {
+        var element = $(event.target).closest('.project-result');
+        api.removeProject(id)
+            .then(deleteSucessful => {
+                element.addClass('deleted-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                    element.remove();
+                 });
+        })
+    }
+
     // Only render the component when we receive data from async call
     currentContent() {
-      if (this.state.customer) {
-        if(this.state.editable){
-          return (
-              <div>
-                  <CustomerPageEdit customer = {this.state.customer} />
-                  <button type="button" onClick={ this.toggleEditFields }>Cancel</button>
-              </div>
-          );
-        }
-        else if(this.state.wasDeleted) {
-            return(
+        if (this.state.customer && this.state.projects) {
+            return (
                 <div>
-                    <h1>{this.state.customer[0].first_name} {this.state.customer[0].last_name} was sucessfully deleted</h1>
-                    <a href="/customers">
-                      <button type="button">Back</button>
-                    </a>
+                    <CustomerPage customer = {this.state.customer} projects = {this.state.projects} removeProject = {this.removeProject} removeCustomer = {this.removeCustomer}/>
                 </div>
             );
         }
         else{
-            return (
-                <div>
-                    <CustomerPage customer = {this.state.customer} />
-                    <button type="button" onClick={ this.toggleEditFields }>Edit</button>
-                    <button type="button" onClick={ this.removeCustomer }>Delete</button>
-                </div>
-            );
+          return <h1> Getting Customer...</h1>
         }
-    }
-    else{
-      return <h1> Getting Customer...</h1>
-    }
     }
 
     render() {
@@ -98,7 +87,7 @@ class Customer extends Component {
 }
 
 Customer.propTypes = {
-  customer: PropTypes.array.isRequired,
+  customer: PropTypes.array.isRequired
 }
 
 export default Customer;

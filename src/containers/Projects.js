@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import React, { Component, PropTypes } from 'react';
 import { ListProjects } from '../components/Projects.js';
 import * as api from '../api';
@@ -9,6 +8,7 @@ class Projects extends Component {
         this.state = {
             projects: null
         }
+        this.removeProject = this.removeProject.bind(this);
     }
 
     componentDidMount() {
@@ -25,10 +25,20 @@ class Projects extends Component {
       });
     }
 
+    removeProject(id,event) {
+        var element = $(event.target).closest('.project-result');
+        api.removeProject(id)
+            .then(deleteSucessful => {
+                element.addClass('deleted-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                    element.remove();
+                 });
+        })
+    }
+
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.projects) {
-        return <ListProjects projects = {this.state.projects} />
+        return <ListProjects projects = {this.state.projects} removeProject = {this.removeProject}/>
       }
 
       return <h1> Fetching Projects...</h1>

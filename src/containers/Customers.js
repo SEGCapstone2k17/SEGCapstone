@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import React, { Component, PropTypes } from 'react';
 import { ListCustomers } from '../components/Customers.js';
 import * as api from '../api';
@@ -9,6 +8,7 @@ class Customers extends Component {
         this.state = {
             customers: null
         }
+        this.removeCustomer = this.removeCustomer.bind(this);
     }
 
     componentDidMount() {
@@ -25,10 +25,20 @@ class Customers extends Component {
       });
     }
 
+    removeCustomer(id,event) {
+        var element = $(event.target).closest('.client-result');
+        api.removeCustomer(id)
+            .then(deleteSucessful => {
+                element.addClass('deleted-item').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                    element.remove();
+                 });
+        })
+    }
+
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.customers) {
-        return <ListCustomers customers = {this.state.customers} />
+        return <ListCustomers customers = {this.state.customers} removeCustomer = {this.removeCustomer} />
       }
 
       return <h1> Fetching Customers...</h1>

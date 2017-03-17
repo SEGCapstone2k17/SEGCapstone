@@ -1,13 +1,11 @@
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import config from '../webpack.config.js';
-var express = require('express');
-var bodyParser = require('body-parser');
-var react = require('react');
-var path = require ('path');
-var reactdom = require('react-dom');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import routes from './routes';
 
-const routes = require('./routes');
 const app = new express();
 const compiler = webpack(config);
 const _view_dir = path.join(__dirname + '/../public');
