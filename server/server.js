@@ -5,10 +5,14 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import routes from './routes';
+import methodOverride from 'method-override';
 
 const app = new express();
 const compiler = webpack(config);
 const _view_dir = path.join(__dirname + '/../public');
+
+// override with POST having ?_method=PUT
+app.use(methodOverride('_method'));
 
 // declare static directory
 app.use(express.static(_view_dir));

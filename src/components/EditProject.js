@@ -25,7 +25,7 @@ class DashboardOther extends Component {
                 <div className="row">
                   <div className="small-12 columns">
                     <h2>Edit Project</h2>
-                    <form action="/api/editProject" method="POST">
+                    <form action="/api/editProject?_method=PUT" method="POST">
                         <input type="hidden" name="id" value={`${project.id}`}/>
                         <div id="project-add" className="dashboard-block">
                           <div className="row">
@@ -45,7 +45,7 @@ class DashboardOther extends Component {
                             </div>
                             <div className="small-12 medium-6 columns">
                               <label htmlFor="project-description">Description</label>
-                              <textarea name="description" defaultValue={`${project.description}`} className="project-textarea-form" id="project-description" defaultValue={""} />
+                              <textarea name="description" defaultValue={`${project.description}`} className="project-textarea-form" id="project-description" />
                             </div>
                           </div>
                           <div className="row">

@@ -24,7 +24,7 @@ class DashboardOther extends Component {
                 <div className="row">
                   <div className="small-12 columns">
                     <h2>Edit Client</h2>
-                    <form action="/api/editCustomer" method="POST">
+                    <form action="/api/editCustomer?_method=PUT" method="POST">
                         <input type="hidden" name="id" value={`${customer.id}`}/>
                         <div id="client-add" className="dashboard-block">
                           <div className="row">

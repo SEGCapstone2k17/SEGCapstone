@@ -8,7 +8,7 @@ api_routes.post('/addCustomer', function(req,res,next){
     db.addCustomer(req,res,next);
 });
 
-api_routes.post('/editCustomer', function(req,res,next){
+api_routes.put('/editCustomer', function(req,res,next){
     console.log('Editing customer');
     db.editCustomer(req,res,next);
 });
@@ -34,7 +34,7 @@ api_routes.post('/addProject', function(req,res,next){
     db.addProject(req,res,next);
 });
 
-api_routes.post('/editProject', function(req,res,next){
+api_routes.put('/editProject', function(req,res,next){
     console.log('Editing project');
     db.editProject(req,res,next);
 });

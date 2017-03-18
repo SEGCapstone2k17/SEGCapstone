@@ -147,9 +147,8 @@ function getProjectById(req, res, next) {
 function getCustomerProjects(req, res, next) {
     var query = '';
     if(req.params.id) {
-        query = 'SELECT project.* FROM project ' +
-                'INNER JOIN customer ' +
-                'ON project.customer_id =' + req.params.id;
+        query = 'SELECT * FROM project ' +
+                'WHERE project.customer_id =' + req.params.id;
     }
     db.any(query)
         .then(data => {
