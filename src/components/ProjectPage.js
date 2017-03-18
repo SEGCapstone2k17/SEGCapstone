@@ -9,8 +9,8 @@ class ProjectPage extends Component {
     render() {
         return (
             <div id="dashboard">
-                <Header title="Projects"/>
-                <DashboardProject project = {this.props.project} removeProject = {this.props.removeProject}/>
+                <Header title="Projects" />
+                <DashboardProject project = {this.props.project} removeProject = {this.props.removeProject} />
             </div>
         );
     }

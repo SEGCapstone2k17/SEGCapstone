@@ -1,4 +1,6 @@
 import React, {PropTypes, Component} from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import {ProjectPage, ProjectPageEdit} from '../components/ProjectPage';
 import * as api from '../api';
 const serverString = 'localhost:3000';
@@ -59,12 +61,18 @@ class Project extends Component {
       if (this.state.project) {
           return (
                 <div>
+                    <Sidebar is_projects_active = "active" />
                     <ProjectPage project = {this.state.project} removeProject = {this.removeProject}/>
                 </div>
             );
     }
     else{
-      return <h1> Getting Project...</h1>
+      return (
+          <div>
+              <Sidebar is_projects_active = "active" />
+              <LoadingScreen />
+          </div>
+      );
     }
     }
 

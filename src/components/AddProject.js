@@ -9,7 +9,7 @@ class AddProjectContent extends Component {
     render() {
         return (
             <div id="dashboard">
-                <Header />
+                <Header title="Projects" />
                 <PageNavigation />
                 <DashboardOther customers = {this.props.customers} />
             </div>

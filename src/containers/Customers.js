@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import { ListCustomers } from '../components/Customers.js';
 import * as api from '../api';
 
@@ -38,10 +40,20 @@ class Customers extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.customers) {
-        return <ListCustomers customers = {this.state.customers} removeCustomer = {this.removeCustomer} />
+        return (
+            <div>
+                <Sidebar is_customers_active = "active" />
+                <ListCustomers customers = {this.state.customers} removeCustomer = {this.removeCustomer} />
+            </div>
+        );
       }
 
-      return <h1> Fetching Customers...</h1>
+      return (
+            <div>
+                <Sidebar is_customers_active = "active" />
+                <LoadingScreen />
+            </div>
+        );
     }
 
     render() {

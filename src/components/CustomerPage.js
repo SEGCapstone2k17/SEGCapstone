@@ -9,8 +9,8 @@ class CustomerPage extends Component {
     render() {
         return (
             <div id="dashboard">
-                <Header title="Clients"/>
-                <DashboardClient customer = {this.props.customer} projects = {this.props.projects} removeProject = {this.props.removeProject} removeCustomer = {this.props.removeCustomer}/>
+                <Header title="Clients" />
+                <DashboardClient customer = {this.props.customer} projects = {this.props.projects} removeProject = {this.props.removeProject} removeCustomer = {this.props.removeCustomer} />
             </div>
         );
     }

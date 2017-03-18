@@ -9,7 +9,7 @@ class EditProjectPage extends Component {
     render() {
         return (
             <div id="dashboard">
-                <Header title="Projects"/>
+                <Header title="Projects" />
                 <DashboardOther project = {this.props.project} customers = {this.props.customers} />
             </div>
         )

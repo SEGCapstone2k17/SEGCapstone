@@ -1,4 +1,6 @@
 import React, {PropTypes, Component} from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import {EditCustomerPage} from '../components/EditCustomer';
 import * as api from '../api';
 const serverString = 'localhost:3000';
@@ -27,10 +29,20 @@ class EditCustomer extends Component {
 
     currentContent() {
         if (this.state.customer) {
-          return <EditCustomerPage customer = {this.state.customer} />
+          return (
+              <div>
+                  <Sidebar is_customers_active = "active" />
+                  <EditCustomerPage customer = {this.state.customer} />
+              </div>
+          );
         }
         else{
-          return <h1> Getting Customer...</h1>
+          return (
+              <div>
+                  <Sidebar is_customers_active = "active" />
+                  <LoadingScreen />
+              </div>
+          );
         }
     }
 

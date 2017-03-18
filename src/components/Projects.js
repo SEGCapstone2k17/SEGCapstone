@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import React, { PropTypes, Component } from 'react';
 import {Header} from './Header';
 
@@ -10,7 +9,7 @@ class ListProjects extends Component {
     render() {
         return (
             <div id="dashboard">
-                <Header title="Projects"/>
+                <Header title="Projects" />
                 <PageNavigation />
                 <DashboardOther projects = {this.props.projects} removeProject = {this.props.removeProject} />
             </div>

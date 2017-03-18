@@ -1,4 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import {AddProjectContent} from '../components/AddProject';
 import * as api from '../api';
 
@@ -27,13 +29,17 @@ class AddProject extends Component {
         if(this.state.customers){
             return (
                 <div>
+                    <Sidebar is_projects_active = "active" />
                     <AddProjectContent customers = {this.state.customers} />
                 </div>
             )
         }
         else{
             return(
-                <h1>Preparing...</h1>
+                <div>
+                    <Sidebar is_projects_active = "active" />
+                    <LoadingScreen />
+                </div>
             )
         }
     }

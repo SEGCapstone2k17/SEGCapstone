@@ -1,4 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import {CustomerPage} from '../components/CustomerPage';
 import * as api from '../api';
 const serverString = 'localhost:3000';
@@ -68,12 +70,18 @@ class Customer extends Component {
         if (this.state.customer && this.state.projects) {
             return (
                 <div>
+                    <Sidebar is_customers_active = "active" />
                     <CustomerPage customer = {this.state.customer} projects = {this.state.projects} removeProject = {this.removeProject} removeCustomer = {this.removeCustomer}/>
                 </div>
             );
         }
         else{
-          return <h1> Getting Customer...</h1>
+          return (
+              <div>
+                  <Sidebar is_customers_active = "active" />
+                  <LoadingScreen />
+              </div>
+          );
         }
     }
 

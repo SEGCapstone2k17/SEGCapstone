@@ -1,7 +1,7 @@
 import React, {PropTypes, Component} from "react";
 import {Header} from "./Header";
 
-class ListCustomers extends React.Component {
+class ListCustomers extends Component {
     constructor(props) {
         super(props);
     }
@@ -9,7 +9,7 @@ class ListCustomers extends React.Component {
     render() {
         return (
             <div id="dashboard">
-                <Header title="Clients"/>
+                <Header title="Clients" />
                 <PageNavigation />
                 <DashboardOther customers = {this.props.customers} removeCustomer = {this.props.removeCustomer} />
             </div>

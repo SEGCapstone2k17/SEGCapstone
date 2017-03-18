@@ -1,4 +1,6 @@
 import React, {PropTypes, Component} from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import {EditProjectPage} from '../components/EditProject';
 import * as api from '../api';
 const serverString = 'localhost:3000';
@@ -39,10 +41,20 @@ class EditProject extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
         if (this.state.project && this.state.customers) {
-              return <EditProjectPage project = {this.state.project} customers = {this.state.customers} />
+              return (
+                  <div>
+                      <Sidebar is_projects_active = "active" />
+                      <EditProjectPage project = {this.state.project} customers = {this.state.customers} />
+                  </div>
+              );
         }
         else{
-          return <h1> Getting Project...</h1>
+          return (
+              <div>
+                  <Sidebar is_projects_active = "active" />
+                  <LoadingScreen />
+              </div>
+          );
         }
     }
 

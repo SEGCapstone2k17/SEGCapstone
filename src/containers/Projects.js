@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import {Sidebar} from '../components/Sidebar';
+import {LoadingScreen} from '../components/LoadingScreen';
 import { ListProjects } from '../components/Projects.js';
 import * as api from '../api';
 
@@ -38,10 +40,20 @@ class Projects extends Component {
     // Only render the component when we receive data from async call
     currentContent() {
       if (this.state.projects) {
-        return <ListProjects projects = {this.state.projects} removeProject = {this.removeProject}/>
+        return (
+            <div>
+                <Sidebar is_projects_active = "active" />
+                <ListProjects projects = {this.state.projects} removeProject = {this.removeProject}/>
+            </div>
+        );
       }
 
-      return <h1> Fetching Projects...</h1>
+      return (
+          <div>
+              <Sidebar is_projects_active = "active" />
+              <LoadingScreen />
+          </div>
+      );
     }
 
     render() {

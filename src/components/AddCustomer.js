@@ -1,4 +1,5 @@
 import React, {ProptTypes, Component} from 'react';
+import {Sidebar} from './Sidebar';
 import {Header} from './Header';
 
 class AddCustomer extends Component {
@@ -8,10 +9,13 @@ class AddCustomer extends Component {
 
     render() {
         return (
-            <div id="dashboard">
-                <Header title="Clients"/>
-                <PageNavigation />
-                <DashboardOther />
+            <div>
+                <Sidebar is_customers_active = "active" />
+                <div id="dashboard">
+                    <Header title="Clients" />
+                    <PageNavigation />
+                    <DashboardOther />
+                </div>
             </div>
         );
     }
