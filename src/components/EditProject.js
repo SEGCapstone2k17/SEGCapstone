@@ -6,6 +6,10 @@ class EditProjectPage extends Component {
         super(props);
     }
 
+    componentDidMount() {
+      document.title = `Edit Project: ${this.props.project[0].name}`;
+    }
+
     render() {
         return (
             <div id="dashboard">

@@ -6,6 +6,10 @@ class ProjectPage extends Component {
         super(props);
     }
 
+    componentDidMount() {
+      document.title = `Project: ${this.props.project[0].name}`;
+    }
+
     render() {
         return (
             <div id="dashboard">

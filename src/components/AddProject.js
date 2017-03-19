@@ -6,6 +6,10 @@ class AddProjectContent extends Component {
         super(props);
     }
 
+    componentDidMount() {
+      document.title = "Add Project";
+    }
+
     render() {
         return (
             <div id="dashboard">

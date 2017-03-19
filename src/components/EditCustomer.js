@@ -6,6 +6,10 @@ class EditCustomerPage extends Component {
         super(props);
     }
 
+    componentDidMount() {
+      document.title = `Edit Client: ${this.props.customer[0].first_name} ${this.props.customer[0].last_name}`;
+    }
+    
     render() {
         return (
             <div id="dashboard">

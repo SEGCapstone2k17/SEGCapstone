@@ -6,6 +6,10 @@ class AddCustomer extends Component {
     constructor(props) {
         super(props);
     }
+    
+    componentDidMount() {
+      document.title = "Add Customer";
+    }
 
     render() {
         return (

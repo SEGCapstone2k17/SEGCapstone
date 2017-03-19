@@ -5,6 +5,10 @@ class ListProjects extends Component {
     constructor(props) {
         super(props);
     }
+    
+    componentDidMount() {
+      document.title = `Projects (${this.props.projects.length})`;
+    }
 
     render() {
         return (

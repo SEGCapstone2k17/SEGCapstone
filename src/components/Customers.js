@@ -6,6 +6,10 @@ class ListCustomers extends Component {
         super(props);
     }
 
+    componentDidMount() {
+      document.title = `Clients (${this.props.customers.length})`;
+    }
+
     render() {
         return (
             <div id="dashboard">
