@@ -58,7 +58,12 @@ function getCustomerById(req, res, next) {
     }
     db.any(query)
         .then(data => {
-            res.send({customers: data});
+            if(data.length > 0){
+                res.send({customers: data});
+            }
+            else{
+                next();
+            }
         })
         .catch(err => {
             return next(err);
@@ -136,7 +141,12 @@ function getProjectById(req, res, next) {
     }
     db.any(query)
         .then(data => {
-            res.send({projects: data});
+            if(data.length > 0){
+                res.send({projects: data});
+            }
+            else{
+                next();
+            }
         })
         .catch(err => {
             return next(err);

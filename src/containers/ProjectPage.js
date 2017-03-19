@@ -25,8 +25,7 @@ class Project extends Component {
     }
 
     componentDidMount() {
-        var param = window.location.href.split(serverString + "/projects/")[1] || '';
-        this.fetchProjectById(param);
+        this.fetchProjectById(this.props.params.id);
         this.fetchCustomers('');
     }
 

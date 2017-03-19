@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 function fetchCustomers(query) {
-      return axios.get('http://localhost:3000/api/customers/?' + query)
+      return axios.get('http://localhost:3000/api/customers/', {params:query})
           .then(res => res.data.customers);
 }
 
@@ -10,13 +10,13 @@ function fetchCustomers(query) {
          .then(res => res.data.customers);
 }
 
-function removeCustomer(id) {
-    return axios.delete('http://localhost:3000/api/customers/' + id)
+function removeCustomer(param) {
+    return axios.delete('http://localhost:3000/api/customers/' + param)
         .then(res => res.data.deleteSucessful);
 }
 
 function fetchProjects(query) {
-    return axios.get('http://localhost:3000/api/projects/?' + query)
+    return axios.get('http://localhost:3000/api/projects/', {params:query})
         .then(res => res.data.projects);
 }
 
@@ -30,8 +30,8 @@ function fetchCustomerProjects(param) {
         .then(res => res.data.projects);
 }
 
-function removeProject(id) {
-    return axios.delete('http://localhost:3000/api/projects/' + id)
+function removeProject(param) {
+    return axios.delete('http://localhost:3000/api/projects/' + param)
         .then(res => res.data.deleteSucessful);
 }
 

@@ -14,8 +14,7 @@ class Customers extends Component {
     }
 
     componentDidMount() {
-        var query = window.location.href.split("?")[1] || '';
-        this.fetchCustomers(query);
+        this.fetchCustomers(this.props.location.query);
     }
 
     // Perform an async call to fetch customers

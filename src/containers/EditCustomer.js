@@ -14,8 +14,7 @@ class EditCustomer extends Component {
     }
 
     componentDidMount() {
-        var param = window.location.href.split(serverString + "/editCustomer/")[1] || '';
-        this.fetchCustomerById(param);
+        this.fetchCustomerById(this.props.params.id);
     }
 
     // Perform an async call to fetch customers

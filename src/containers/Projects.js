@@ -14,8 +14,7 @@ class Projects extends Component {
     }
 
     componentDidMount() {
-        var query = window.location.href.split("?")[1] || '';
-        this.fetchProjects(query);
+        this.fetchProjects(this.props.location.query);
     }
 
     // Perform an async call to fetch projects

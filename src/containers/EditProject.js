@@ -15,8 +15,7 @@ class EditProject extends Component {
     }
 
     componentDidMount() {
-        var param = window.location.href.split(serverString + "/editProject/")[1] || '';
-        this.fetchProjectById(param);
+        this.fetchProjectById(this.props.params.id);
         this.fetchCustomers('');
     }
 

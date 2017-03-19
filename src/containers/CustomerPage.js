@@ -24,9 +24,8 @@ class Customer extends Component {
     }
 
     componentDidMount() {
-        var param = window.location.href.split(serverString + "/customers/")[1] || '';
-        this.fetchCustomerById(param);
-        this.fetchProjects(param);
+        this.fetchCustomerById(this.props.params.id);
+        this.fetchProjects(this.props.params.id);
     }
 
     removeCustomer(removed_customer) {
