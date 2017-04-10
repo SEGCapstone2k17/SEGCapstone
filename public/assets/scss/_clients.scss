@@ -46,6 +46,7 @@
             @include border-top(1px, $colour-border-dark);
         }
     }
+<<<<<<< HEAD
 
     a {
         text-decoration: none;
@@ -55,22 +56,30 @@
             text-decoration: underline;
         }
     }
+=======
+>>>>>>> refs/remotes/origin/dev-cody
 }
 
 #client-actions {
     padding-top: 15px;
 
     a {
+<<<<<<< HEAD
         color: #fff;
+=======
+>>>>>>> refs/remotes/origin/dev-cody
         display: inline-block;
         border-radius: 4px;
         text-decoration: none;
         padding: 10px 20px;
+<<<<<<< HEAD
         margin-right: 10px;
 
         &:hover {
             text-decoration: none;
         }
+=======
+>>>>>>> refs/remotes/origin/dev-cody
     }
 }
 
@@ -163,6 +172,7 @@
     }
 }
 
+<<<<<<< HEAD
 #client-search-submit {
     padding: 6px;
     display: block;
@@ -170,6 +180,8 @@
     border-radius: 4px;
 }
 
+=======
+>>>>>>> refs/remotes/origin/dev-cody
 .client-refine-result {
     width: 100%;
     padding-left: 15px;

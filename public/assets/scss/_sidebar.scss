@@ -21,13 +21,21 @@
 
 .sidebar-action {
     cursor: pointer;
+<<<<<<< HEAD
 
     a {
+=======
+    padding: 20px;
+    @include border-left(5px, $background-dark);
+
+    span {
+>>>>>>> refs/remotes/origin/dev-cody
         display: block;
         color: darken(#fff, 10%);
         font-size: 0.85em;
         letter-spacing: 1px;
         vertical-align: middle;
+<<<<<<< HEAD
         padding: 20px;
         border-left: 5px solid #364760;
         @include border-left(5px, $background-dark);
@@ -37,6 +45,8 @@
             @include border-left(5px, $colour-main);
             background: darken($background-dark, 10%);
         }
+=======
+>>>>>>> refs/remotes/origin/dev-cody
     }
 
     svg {
@@ -47,6 +57,7 @@
         vertical-align: middle;
     }
 
+<<<<<<< HEAD
     &.active {
 
         a {
@@ -54,6 +65,19 @@
             background: darken($background-dark, 10%);
         }
 
+=======
+    &:hover, &.active {
+        @include border-left(5px, $colour-main);
+        background: darken($background-dark, 10%);
+
+        span {
+            color: #fff;
+        }
+
+        svg {
+            fill: #fff;
+        }
+>>>>>>> refs/remotes/origin/dev-cody
     }
 }
 

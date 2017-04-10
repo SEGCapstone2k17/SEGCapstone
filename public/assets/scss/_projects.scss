@@ -60,7 +60,10 @@
         border-radius: 4px;
         text-decoration: none;
         padding: 10px 20px;
+<<<<<<< HEAD
         margin-right: 10px;
+=======
+>>>>>>> refs/remotes/origin/dev-cody
     }
 }
 
@@ -199,6 +202,7 @@
     }
 }
 
+<<<<<<< HEAD
 #project-search-submit {
     padding: 6px;
     display: block;
@@ -208,6 +212,10 @@
 
 .project-refine-result {
     width: 100%;
+=======
+.project-refine-result {
+    width: 33.3%;
+>>>>>>> refs/remotes/origin/dev-cody
     float: left;
     padding-left: 15px;
 }
