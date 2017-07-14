@@ -10,8 +10,8 @@ export const logStars = function(message) {
 
 export default {
     connectionString: process.env.DATABASE_URL,
-    port: env.PORT || 8080,
-    host: env.HOST || 'localhost',
+    port: process.env.PORT || 8080,
+    host: process.env.HOST || 'localhost',
     get serverUrl() {
         return `http://${this.host}:${this.port}`;
     }
