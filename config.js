@@ -9,7 +9,7 @@ export const logStars = function(message) {
 };
 
 export default {
-    connectionString: 'postgres://postgres:password@localhost:5432/capstone',
+    connectionString: process.env.DATABASE_URL,
     port: env.PORT || 8080,
     host: env.HOST || 'localhost',
     get serverUrl() {
